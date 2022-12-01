@@ -15,6 +15,7 @@ app.all("/wled", (req, res) => {
   }
 
   if (func !== undefined) {
+    console.log("FUNC:", func);
     CLIENT.publish(TOPIC, func.toString());
   }
   if (color !== undefined) {
