@@ -17,7 +17,10 @@ app.all("/wled", (req, res) => {
 
   if (func !== undefined) {
     console.log("FUNC:", func);
-    CLIENT.publish(TOPIC, func.toString());
+    CLIENT.publish(TOPIC, func.toString(), { qos: 1 }, (err, result) => {
+      if (err) console.error(err);
+      if (result) console.log(result);
+    });
   }
   if (color !== undefined) {
     CLIENT.publish(`${TOPIC}/col`, color.toString());
