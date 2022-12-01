@@ -10,6 +10,7 @@ const CLIENT = mqtt.connect(CLIENT_URL);
 const app = express();
 app.all("/wled", (req, res) => {
   console.log("INICIANDO...");
+  console.log(CLIENT);
   const { func, color, token } = req.query;
   if (token !== TOKEN) {
     res.status(403).send("UNAUTHORIZED");
@@ -17,6 +18,7 @@ app.all("/wled", (req, res) => {
 
   if (func !== undefined) {
     console.log("FUNC:", func);
+
     CLIENT.publish(TOPIC, func.toString(), { qos: 1 }, (err, result) => {
       if (err) console.error(err);
       if (result) console.log(result);
