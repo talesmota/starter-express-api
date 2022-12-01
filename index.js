@@ -9,6 +9,7 @@ const CLIENT = mqtt.connect(CLIENT_URL);
 
 const app = express();
 app.all("/wled", (req, res) => {
+  console.log("INICIANDO...");
   const { func, color, token } = req.query;
   if (token !== TOKEN) {
     res.status(403).send("UNAUTHORIZED");
