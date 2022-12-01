@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/cyclic-software/starter-express-api#readme",
   "dependencies": {
-    "@types/mqtt": "^2.5.0",
-    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mqtt": "^4.3.7"
   }
