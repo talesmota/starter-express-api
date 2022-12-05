@@ -37,7 +37,6 @@ app.all("/wled", async (req, res) => {
   return lightAction;(req,res);
 });
 app.post("/wled", async (req, res) => {
-  return lightAction;
-  req, res;
+  return lightAction(req, res);
 });
 app.listen(process.env.PORT || 3000);
