@@ -31,4 +31,27 @@ app.all("/wled", async (req, res) => {
     func: func !== undefined ? func : "",
   });
 });
+app.post("/wled", async (req, res) => {
+  console.log("INICIANDO...");
+  const { func, color, token } = req.query;
+  if (token !== TOKEN) {
+    res.status(403).send("UNAUTHORIZED");
+  }
+
+  if (func !== undefined) {
+    console.log("FUNC:", func);
+
+    await CLIENT.publish(TOPIC, func.toString(), { qos: 1 });
+    setTimeout( () => await CLIENT.publish(TOPIC, func.toString(), { qos: 1 }), 1000);
+  }
+  if (color !== undefined) {
+    await CLIENT.publish(`${TOPIC}/col`, color.toString(), { qos: 1 });
+    setTimeout( () => await CLIENT.publish(TOPIC, func.toString(), { qos: 1 }), 1000);
+  }
+  res.send({
+    status: "ok",
+    color: color !== undefined ? color : "",
+    func: func !== undefined ? func : "",
+  });
+});
 app.listen(process.env.PORT || 3000);
