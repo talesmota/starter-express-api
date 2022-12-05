@@ -12,7 +12,7 @@ const lightAction = async (req, res) => {
     console.log("INICIANDO...");
     const { func, color, token } = req.query;
     if (token !== TOKEN) {
-      return res.status(403).send("UNAUTHORIZED");
+      return { status: 403, message: "UNAUTHORIZED"};
     }
 
     if (func !== undefined) {
@@ -26,17 +26,23 @@ const lightAction = async (req, res) => {
       await CLIENT.publish(`${TOPIC}/col`, color.toString(), { qos: 1 });
       await CLIENT.publish(`${TOPIC}/col`, color.toString(), { qos: 1 });
     }
-    return res.send({
-      status: "ok",
-      color: color !== undefined ? color : "",
-      func: func !== undefined ? func : "",
-    });
+    return { 
+        status: 200, 
+        message: {
+            status: "ok",
+            color: color !== undefined ? color : "",
+            func: func !== undefined ? func : "",
+        }
+    }
+   
 }
 const app = express();
 app.all("/wled", async (req, res) => {
-  return await lightAction;(req,res);
+    const response  = await lightAction(req,res);
+    res.send(response.status).send( response.message);
 });
 app.post("/wled", async (req, res) => {
-  return await lightAction(req, res);
+  const response  = await lightAction(req,res);
+    res.send(response.status).send( response.message);
 });
 app.listen(process.env.PORT || 3000);
