@@ -19,9 +19,11 @@ app.all("/wled", async (req, res) => {
     console.log("FUNC:", func);
 
     await CLIENT.publish(TOPIC, func.toString(), { qos: 1 });
+    setTimeout( () => await CLIENT.publish(TOPIC, func.toString(), { qos: 1 }), 1000);
   }
   if (color !== undefined) {
     await CLIENT.publish(`${TOPIC}/col`, color.toString(), { qos: 1 });
+    setTimeout( () => await CLIENT.publish(TOPIC, func.toString(), { qos: 1 }), 1000);
   }
   res.send({
     status: "ok",
