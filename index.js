@@ -34,9 +34,9 @@ const lightAction = async (req, res) => {
 }
 const app = express();
 app.all("/wled", async (req, res) => {
-  return lightAction;(req,res);
+  return await lightAction;(req,res);
 });
 app.post("/wled", async (req, res) => {
-  return lightAction(req, res);
+  return await lightAction(req, res);
 });
 app.listen(process.env.PORT || 3000);
