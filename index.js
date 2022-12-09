@@ -40,8 +40,8 @@ const lightAction = async (req, res) => {
     },
   };
 };
-app.use(cors());
 const app = express();
+app.use(cors());
 app.all("/wled", async (req, res) => {
   const response = await lightAction(req, res);
   res.status(response.status).send(response.message);
